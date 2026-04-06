@@ -240,6 +240,25 @@ body {
   font-weight: bold;
 }
 
+/* ── Malcolm Photos ── */
+.malcolm-photos {
+  display: flex;
+  gap: 16px;
+  max-width: 600px;
+  margin: 20px auto 8px;
+  padding: 0 20px;
+}
+
+.malcolm-photos img {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
 /* ── Bug Silhouette ── */
 .bug-silhouette {
   width: 80px;
@@ -550,6 +569,11 @@ body {
 
 <div id="welcome" class="welcome" style="display:none">
   <span class="malcolm-name">Malcolm says:</span> Hey Olive! I made this guide for you. Start with the friendly bugs — they're totally harmless. The more you find, the more you unlock. You got this.
+</div>
+
+<div class="malcolm-photos">
+  <img src="images/malcolm-roly.jpg" alt="Malcolm holding a roly-poly">
+  <img src="images/malcolm-pointing.jpg" alt="Malcolm pointing at bugs">
 </div>
 
 <div id="app"></div>
