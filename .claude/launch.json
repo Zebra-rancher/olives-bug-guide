@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "olives-bugs",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8091", "-d", "/Users/claudeatomicauto.biz/Projects/olives-bug-guide"],
+      "port": 8091
+    }
+  ]
+}
