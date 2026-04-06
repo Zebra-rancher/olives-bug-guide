@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <g fill="none" stroke="#8B6F47" stroke-width="2">
+    <ellipse cx="100" cy="90" rx="14" ry="10" fill="#b5a58a"/>
+    <ellipse cx="100" cy="115" rx="12" ry="20" fill="#c4b49a"/>
+    <circle cx="100" cy="75" r="8" fill="#b5a58a"/>
+    <line x1="94" y1="68" x2="85" y2="52"/>
+    <line x1="106" y1="68" x2="115" y2="52"/>
+    <path d="M88 88 Q60 75 50 60" fill="#d4c5a9" opacity="0.5"/>
+    <path d="M112 88 Q140 75 150 60" fill="#d4c5a9" opacity="0.5"/>
+    <line x1="88" y1="95" x2="68" y2="90"/>
+    <line x1="112" y1="95" x2="132" y2="90"/>
+    <line x1="88" y1="105" x2="65" y2="115"/>
+    <line x1="112" y1="105" x2="135" y2="115"/>
+    <line x1="90" y1="120" x2="72" y2="140"/>
+    <line x1="110" y1="120" x2="128" y2="140"/>
+    <line x1="95" y1="135" x2="88" y2="155"/>
+    <line x1="105" y1="135" x2="112" y2="155"/>
+    <circle cx="96" cy="73" r="2.5" fill="#3D2E1F"/>
+    <circle cx="104" cy="73" r="2.5" fill="#3D2E1F"/>
+  </g>
+</svg>
