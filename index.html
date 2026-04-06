@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sandy Bugs">
+<title>Olive's Guide to Sandy Bugs by Malcolm</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐛</text></svg>">
+<style>
+/* ── Reset & Custom Properties ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #FFF8F0;
+  --sage: #7BA05B;
+  --sage-light: #e8f0e0;
+  --goldenrod: #E8A838;
+  --goldenrod-light: #fdf3e0;
+  --terracotta: #D4654A;
+  --terracotta-light: #fbe8e4;
+  --brown: #8B6F47;
+  --dark-brown: #3D2E1F;
+  --card-bg: #FFFFFF;
+  --shadow: rgba(61, 46, 31, 0.12);
+  --radius: 16px;
+}
+
+html {
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, 'Nunito', 'Segoe UI', sans-serif;
+  background: var(--cream);
+  color: var(--dark-brown);
+  line-height: 1.5;
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Header ── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--sage);
+  color: white;
+  text-align: center;
+  padding: 14px 20px 10px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.header .subtitle {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+/* ── Progress Bar ── */
+.progress-section {
+  position: sticky;
+  top: 62px;
+  z-index: 99;
+  background: var(--cream);
+  padding: 12px 24px 8px;
+  border-bottom: 1px solid rgba(139, 111, 71, 0.15);
+}
+
+.progress-bar-track {
+  background: rgba(139, 111, 71, 0.15);
+  border-radius: 12px;
+  height: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  background: linear-gradient(90deg, var(--sage), #9BC07B);
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-width: 0;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brown);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.progress-milestone {
+  font-size: 0.75rem;
+  color: var(--brown);
+  opacity: 0.7;
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* ── Welcome ── */
+.welcome {
+  max-width: 600px;
+  margin: 24px auto 8px;
+  padding: 20px 24px;
+  background: var(--sage-light);
+  border-left: 4px solid var(--sage);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.welcome .malcolm-name {
+  font-weight: 700;
+  color: var(--sage);
+}
+
+/* ── Tier Sections ── */
+.tier-section {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 0 20px;
+}
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid;
+}
+
+.tier-header h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.tier-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  color: white;
+}
+
+.tier-1 .tier-header { border-color: var(--sage); }
+.tier-1 .tier-badge { background: var(--sage); }
+.tier-2 .tier-header { border-color: var(--goldenrod); }
+.tier-2 .tier-badge { background: var(--goldenrod); }
+.tier-3 .tier-header { border-color: var(--terracotta); }
+.tier-3 .tier-badge { background: var(--terracotta); }
+
+/* ── Card Grid ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ── Locked Tier ── */
+.tier-locked .card-grid {
+  filter: blur(3px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.tier-locked .tier-header {
+  opacity: 0.5;
+}
+
+.lock-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--brown);
+}
+
+.lock-message .lock-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ── Bug Cards ── */
+.bug-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px var(--shadow);
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.bug-card:active {
+  transform: scale(0.97);
+}
+
+.bug-card:hover {
+  box-shadow: 0 4px 16px var(--shadow);
+}
+
+.bug-card.found {
+  background: var(--sage-light);
+}
+
+.bug-card.found .found-check {
+  display: block;
+}
+
+.found-check {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  background: var(--sage);
+  border-radius: 50%;
+  color: white;
+  font-size: 0.9rem;
+  line-height: 28px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* ── Bug Silhouette ── */
+.bug-silhouette {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.bug-silhouette.undiscovered {
+  background: rgba(139, 111, 71, 0.12);
+  color: var(--brown);
+}
+
+.bug-silhouette.discovered {
+  background: var(--sage-light);
+  color: var(--sage);
+}
+
+.bug-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ── Safety Badges ── */
+.safety-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.safety-safe { background: #d4edda; color: #276749; }
+.safety-look { background: #fff3cd; color: #856404; }
+.safety-distance { background: #fde8e4; color: #a13d2d; }
+
+/* ── Modal ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(61, 46, 31, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal {
+  background: var(--card-bg);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85dvh;
+  overflow-y: auto;
+  box-shadow: 0 12px 40px rgba(61, 46, 31, 0.3);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+@keyframes modalIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(139, 111, 71, 0.1);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brown);
+  z-index: 1;
+}
+
+.modal-silhouette {
+  width: 120px;
+  height: 120px;
+  margin: 32px auto 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.modal-content {
+  padding: 0 28px 28px;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.malcolm-quote {
+  background: var(--sage-light);
+  border-left: 4px solid var(--sage);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.malcolm-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sage);
+  margin-bottom: 4px;
+}
+
+.where-to-look {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: rgba(139, 111, 71, 0.06);
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.where-to-look .pin {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.modal-safety {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-safety .safety-badge {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+}
+
+/* ── Found It Button ── */
+.found-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.found-btn:active {
+  transform: scale(0.97);
+}
+
+.found-btn.not-found {
+  background: var(--sage);
+  color: white;
+}
+
+.found-btn.already-found {
+  background: var(--sage-light);
+  color: var(--sage);
+}
+
+.undo-link {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--brown);
+  opacity: 0.6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ── Confetti ── */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: confettiFall var(--duration) cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ── Malcolm Celebration Quote ── */
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 310;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.celebration-text {
+  background: var(--sage);
+  color: white;
+  padding: 20px 32px;
+  border-radius: 20px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(123, 160, 91, 0.4);
+  animation: celebIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes celebIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ── Tier Unlock Animation ── */
+.tier-unlocking .tier-header {
+  animation: tierGlow 1s ease-out;
+}
+
+@keyframes tierGlow {
+  0% { box-shadow: 0 0 0 0 rgba(232, 168, 56, 0.6); }
+  50% { box-shadow: 0 0 20px 8px rgba(232, 168, 56, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(232, 168, 56, 0); }
+}
+
+.tier-unlocking .card-grid {
+  animation: cardsReveal 0.6s ease-out;
+}
+
+@keyframes cardsReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 0.8rem;
+  color: var(--brown);
+  opacity: 0.5;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Olive's Guide to Sandy Bugs</h1>
+  <div class="subtitle">by Malcolm</div>
+</div>
+
+<div class="progress-section">
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-text" id="progressText"></div>
+  <div class="progress-milestone" id="progressMilestone"></div>
+</div>
+
+<div id="welcome" class="welcome" style="display:none">
+  <span class="malcolm-name">Malcolm says:</span> Hey Olive! I made this guide for you. Start with the friendly bugs — they're totally harmless. The more you find, the more you unlock. You got this.
+</div>
+
+<div id="app"></div>
+
+<div class="footer">Made with care in Sandy, Oregon</div>
+
+<div class="modal-overlay" id="modal" onclick="handleModalOverlayClick(event)">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+/* ── Bug Data ── */
+const BUGS = [
+  { id: 1, name: "Ladybug", malcolmsTake: "They're good luck — if one lands on you, that's a good sign.", whereToLook: "Garden plants, roses, shrubs — spring through fall", safety: "safe", tier: 1 },
+  { id: 2, name: "Roly-poly", malcolmsTake: "They're like tiny armadillos — they curl up into a ball for protection.", whereToLook: "Under rocks, logs, flowerpots, damp leaf litter — year-round", safety: "safe", tier: 1 },
+  { id: 3, name: "Western Boxelder Bug", malcolmsTake: "They love sunbathing — they gather in huge groups on warm walls just to soak up the sun.", whereToLook: "Sunny house walls, maple trees, patios — late spring through fall", safety: "look", tier: 1 },
+  { id: 4, name: "Green Stink Bug", malcolmsTake: "It's like a tiny skunk — sprays a stinky smell when it's scared.", whereToLook: "Shrubs, trees, garden plants — late spring through fall", safety: "look", tier: 1 },
+  { id: 5, name: "Cabbage White Butterfly", malcolmsTake: "The caterpillar is cool too — before it's a butterfly, it's a bright green caterpillar hiding on leaves.", whereToLook: "Gardens, lawns, roadsides — spring through fall", safety: "safe", tier: 1 },
+  { id: 6, name: "Honey Bee / Bumble Bee", malcolmsTake: "They dance to talk — bees do a \"waggle dance\" to tell other bees where the best flowers are.", whereToLook: "Flowers in yards, meadows, gardens — spring through fall", safety: "distance", tier: 1 },
+  { id: 7, name: "Cross Orbweaver", malcolmsTake: "It eats its own web — when the web gets old, it eats the silk and recycles it into a new web.", whereToLook: "Gardens, shrubs, fence posts — late summer through fall", safety: "look", tier: 2 },
+  { id: 8, name: "Crab Spider", malcolmsTake: "It's a sneaky hunter — hides on flowers and ambushes bugs that come to get nectar.", whereToLook: "On flowers in gardens and meadows — spring through fall", safety: "look", tier: 2 },
+  { id: 9, name: "Jumping Spider", malcolmsTake: "It has giant eyes — big front eyes give it amazing vision. It can actually look at you and see you.", whereToLook: "Fences, house siding, rocks, sunny spots — sunny days", safety: "look", tier: 2 },
+  { id: 10, name: "Wolf Spider", malcolmsTake: "It's fast but shy — it runs super quick but it's actually running AWAY from you, not toward you.", whereToLook: "On the ground in lawns, leaf litter, trails — spring through fall, active at dusk", safety: "look", tier: 2 },
+  { id: 11, name: "Giant House Spider", malcolmsTake: "It's big but harmless — looks scary because of its size but it literally cannot hurt you.", whereToLook: "Garages, basements, sheds, bathtubs — mid-summer to early fall", safety: "look", tier: 2 },
+  { id: 12, name: "Dragonfly", malcolmsTake: "It eats mosquitoes — dragonflies are mosquito-eating machines. They're on our side.", whereToLook: "Sandy River, ponds, streams — late spring through early fall", safety: "safe", tier: 2 },
+  { id: 13, name: "Mosquito", malcolmsTake: "You can outsmart them — bug spray and long sleeves beat them every time. Nothing to be scared of, just annoying.", whereToLook: "Damp grassy areas, puddles, near slow water — late spring through summer", safety: "look", tier: 2 },
+  { id: 14, name: "Ants", malcolmsTake: "They're tiny farmers — ants \"milk\" aphids for sugary honeydew and protect them, like having tiny pet cows.", whereToLook: "Sidewalks, patios, lawns, garden beds — spring through fall", safety: "safe", tier: 2 },
+  { id: 15, name: "Boxelder Bug Nymphs", malcolmsTake: "They start out bright red — the babies are way more colorful than the adults.", whereToLook: "Boxelder and maple trees — summer", safety: "look", tier: 2 },
+  { id: 16, name: "Earwig", malcolmsTake: "They DON'T go in your ears — the name is a myth. Earwigs have zero interest in your ears.", whereToLook: "Under rocks, boards, flowerpots, mulch — spring through fall, active at night", safety: "look", tier: 2 },
+  { id: 17, name: "Bald-faced Hornet", malcolmsTake: "Just don't mess with the nest — they only get mad if you bother their home. Leave them alone and they leave you alone.", whereToLook: "Paper nests in trees, shrubs, buildings — late spring through fall", safety: "distance", tier: 3 },
+  { id: 18, name: "Yellowjacket", malcolmsTake: "Stay calm and they'll leave — if you don't swat at them, they usually just check you out and fly away.", whereToLook: "Ground nests, wall voids, near trash cans and picnics — summer through early fall", safety: "distance", tier: 3 },
+];
+
+const TIER_NAMES = {
+  1: "Friendly Starters",
+  2: "Spiders & Middle Tier",
+  3: "Boss Level"
+};
+
+const MALCOLM_QUOTES = [
+  "Nice find, Olive!",
+  "You're getting brave!",
+  "That's {count} bugs found!",
+  "You're a real bug hunter!",
+  "Told you it wasn't scary!",
+  "Sandy bugs don't stand a chance!"
+];
+
+const SAFETY_LABELS = {
+  safe: { text: "Safe to touch", icon: "\u270b", className: "safety-safe" },
+  look: { text: "Look but don't touch", icon: "\ud83d\udc40", className: "safety-look" },
+  distance: { text: "Respect from a distance", icon: "\u26a0\ufe0f", className: "safety-distance" }
+};
+
+const BUG_ICONS = {
+  1: "\ud83d\udc1e", 2: "\ud83e\udda5", 3: "\ud83d\udc1b", 4: "\ud83e\uddea",
+  5: "\ud83e\udd8b", 6: "\ud83d\udc1d", 7: "\ud83d\udd78\ufe0f", 8: "\ud83e\udda3",
+  9: "\ud83d\udd77\ufe0f", 10: "\ud83d\udd77\ufe0f", 11: "\ud83d\udd77\ufe0f", 12: "\ud83e\udeb2",
+  13: "\ud83e\uddf3", 14: "\ud83d\udc1c", 15: "\ud83d\udc1b", 16: "\ud83e\udeb3",
+  17: "\ud83d\udc1d", 18: "\ud83d\udc1d"
+};
+
+/* ── State Management ── */
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem("olives-bugs")) || {};
+  } catch { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem("olives-bugs", JSON.stringify(state));
+}
+
+function getFoundCount(state) {
+  return Object.keys(state).length;
+}
+
+function isTierUnlocked(tier, state) {
+  const count = getFoundCount(state);
+  if (tier === 1) return true;
+  if (tier === 2) return count >= 3;
+  if (tier === 3) return count >= 8;
+  return false;
+}
+
+function markFound(bugId) {
+  const state = loadState();
+  const prevCount = getFoundCount(state);
+  state[bugId] = { found: true, foundAt: new Date().toISOString() };
+  saveState(state);
+  const newCount = getFoundCount(state);
+
+  let newTierUnlocked = null;
+  if (prevCount < 3 && newCount >= 3) newTierUnlocked = 2;
+  if (prevCount < 8 && newCount >= 8) newTierUnlocked = 3;
+
+  return { newCount, newTierUnlocked };
+}
+
+function markUnfound(bugId) {
+  const state = loadState();
+  delete state[bugId];
+  saveState(state);
+}
+
+/* ── Render ── */
+function renderApp() {
+  const state = loadState();
+  const foundCount = getFoundCount(state);
+
+  // Progress bar
+  const pct = (foundCount / 18) * 100;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressText").textContent = foundCount + " / 18 bugs found";
+
+  let milestone = "";
+  if (foundCount < 3) milestone = "Find " + (3 - foundCount) + " more bug" + (3 - foundCount !== 1 ? "s" : "") + " to unlock Spiders & Middle Tier!";
+  else if (foundCount < 8) milestone = "Find " + (8 - foundCount) + " more bug" + (8 - foundCount !== 1 ? "s" : "") + " to unlock Boss Level!";
+  else if (foundCount < 18) milestone = "Keep going — " + (18 - foundCount) + " bugs left to find!";
+  else milestone = "You found them ALL! Amazing!";
+  document.getElementById("progressMilestone").textContent = milestone;
+
+  // Welcome
+  document.getElementById("welcome").style.display = foundCount === 0 ? "block" : "none";
+
+  // Tiers
+  const app = document.getElementById("app");
+  app.innerHTML = "";
+
+  for (const tierNum of [1, 2, 3]) {
+    const tierBugs = BUGS.filter(b => b.tier === tierNum);
+    const unlocked = isTierUnlocked(tierNum, state);
+
+    const section = document.createElement("div");
+    section.className = "tier-section tier-" + tierNum + (unlocked ? "" : " tier-locked");
+    section.id = "tier-" + tierNum;
+
+    const header = document.createElement("div");
+    header.className = "tier-header";
+    header.innerHTML = '<h2>' + TIER_NAMES[tierNum] + '</h2><span class="tier-badge">' +
+      (tierNum === 1 ? "Tier 1" : tierNum === 2 ? "Tier 2" : "Boss") + '</span>';
+    section.appendChild(header);
+
+    if (!unlocked) {
+      const lockMsg = document.createElement("div");
+      lockMsg.className = "lock-message";
+      const needed = tierNum === 2 ? 3 : 8;
+      const remaining = needed - foundCount;
+      lockMsg.innerHTML = '<span class="lock-icon">\ud83d\udd12</span>Find ' + remaining + ' more bug' + (remaining !== 1 ? 's' : '') + ' to unlock!';
+      section.appendChild(lockMsg);
+    }
+
+    const grid = document.createElement("div");
+    grid.className = "card-grid";
+
+    for (const bug of tierBugs) {
+      const isFound = !!state[bug.id];
+      const card = document.createElement("div");
+      card.className = "bug-card" + (isFound ? " found" : "");
+      card.onclick = () => openBugModal(bug.id);
+
+      const silClass = isFound ? "discovered" : "undiscovered";
+
+      const safetyInfo = SAFETY_LABELS[bug.safety];
+
+      card.innerHTML =
+        '<div class="found-check">\u2713</div>' +
+        '<div class="bug-silhouette ' + silClass + '">' + BUG_ICONS[bug.id] + '</div>' +
+        '<div class="bug-card-name">' + bug.name + '</div>' +
+        '<span class="safety-badge ' + safetyInfo.className + '">' + safetyInfo.icon + ' ' + safetyInfo.text + '</span>';
+
+      grid.appendChild(card);
+    }
+
+    section.appendChild(grid);
+    app.appendChild(section);
+  }
+}
+
+/* ── Modal ── */
+function openBugModal(bugId) {
+  const bug = BUGS.find(b => b.id === bugId);
+  const state = loadState();
+  const isFound = !!state[bugId];
+  const safetyInfo = SAFETY_LABELS[bug.safety];
+
+  const silClass = isFound ? "discovered" : "undiscovered";
+  const bgColors = { 1: "var(--sage-light)", 2: "var(--goldenrod-light)", 3: "var(--terracotta-light)" };
+
+  let btnHTML;
+  if (isFound) {
+    btnHTML = '<button class="found-btn already-found">\u2713 Already Found!</button>' +
+      '<span class="undo-link" onclick="handleUnfind(' + bugId + ')">Undo</span>';
+  } else {
+    btnHTML = '<button class="found-btn not-found" onclick="handleFoundIt(' + bugId + ')">Found it!</button>';
+  }
+
+  document.getElementById("modalContent").innerHTML =
+    '<button class="modal-close" onclick="closeBugModal()">\u2715</button>' +
+    '<div class="modal-silhouette ' + silClass + '" style="background:' + bgColors[bug.tier] + '">' + BUG_ICONS[bug.id] + '</div>' +
+    '<div class="modal-content">' +
+      '<h2>' + bug.name + '</h2>' +
+      '<div class="malcolm-quote">' +
+        '<div class="malcolm-label">Malcolm says:</div>' +
+        bug.malcolmsTake +
+      '</div>' +
+      '<div class="where-to-look">' +
+        '<span class="pin">\ud83d\udccd</span>' +
+        '<span>' + bug.whereToLook + '</span>' +
+      '</div>' +
+      '<div class="modal-safety">' +
+        '<span class="safety-badge ' + safetyInfo.className + '">' + safetyInfo.icon + ' ' + safetyInfo.text + '</span>' +
+      '</div>' +
+      btnHTML +
+    '</div>';
+
+  document.getElementById("modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeBugModal() {
+  document.getElementById("modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function handleModalOverlayClick(e) {
+  if (e.target === document.getElementById("modal")) {
+    closeBugModal();
+  }
+}
+
+/* ── Found It Flow ── */
+function handleFoundIt(bugId) {
+  const result = markFound(bugId);
+
+  closeBugModal();
+  showConfetti();
+  showMalcolmQuote(result.newCount);
+
+  if (result.newTierUnlocked) {
+    setTimeout(() => showTierUnlock(result.newTierUnlocked), 1800);
+  }
+
+  setTimeout(() => renderApp(), 300);
+}
+
+function handleUnfind(bugId) {
+  markUnfound(bugId);
+  closeBugModal();
+  renderApp();
+}
+
+/* ── Confetti ── */
+function showConfetti() {
+  const container = document.createElement("div");
+  container.className = "confetti-container";
+  document.body.appendChild(container);
+
+  const colors = ["#7BA05B", "#E8A838", "#D4654A", "#8B6F47", "#9BC07B", "#F5C563", "#E8927C"];
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+
+  for (let i = 0; i < 35; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    const angle = (Math.PI * 2 * i) / 35 + (Math.random() - 0.5) * 0.5;
+    const dist = 150 + Math.random() * 250;
+    const tx = Math.cos(angle) * dist;
+    const ty = Math.sin(angle) * dist - 100;
+    const dur = 0.8 + Math.random() * 0.6;
+
+    piece.style.cssText =
+      'left:' + cx + 'px;top:' + cy + 'px;' +
+      'background:' + colors[i % colors.length] + ';' +
+      '--tx:' + tx + 'px;--ty:' + ty + 'px;' +
+      '--rot:' + (Math.random() * 720 - 360) + 'deg;' +
+      '--duration:' + dur + 's;' +
+      'width:' + (6 + Math.random() * 8) + 'px;' +
+      'height:' + (6 + Math.random() * 8) + 'px;';
+
+    container.appendChild(piece);
+  }
+
+  setTimeout(() => container.remove(), 2000);
+}
+
+/* ── Malcolm Celebration Quote ── */
+function showMalcolmQuote(count) {
+  const quote = MALCOLM_QUOTES[Math.floor(Math.random() * MALCOLM_QUOTES.length)]
+    .replace("{count}", count);
+
+  const overlay = document.createElement("div");
+  overlay.className = "celebration-overlay";
+  overlay.innerHTML = '<div class="celebration-text">' + quote + '</div>';
+  document.body.appendChild(overlay);
+
+  setTimeout(() => overlay.remove(), 2200);
+}
+
+/* ── Tier Unlock ── */
+function showTierUnlock(tierNum) {
+  const tierEl = document.getElementById("tier-" + tierNum);
+  if (!tierEl) return;
+
+  tierEl.classList.add("tier-unlocking");
+  setTimeout(() => tierEl.classList.remove("tier-unlocking"), 1500);
+
+  // Show unlock message
+  const overlay = document.createElement("div");
+  overlay.className = "celebration-overlay";
+  overlay.innerHTML = '<div class="celebration-text">\ud83d\udd13 ' + TIER_NAMES[tierNum] + ' Unlocked!</div>';
+  document.body.appendChild(overlay);
+  showConfetti();
+
+  setTimeout(() => overlay.remove(), 2500);
+}
+
+/* ── Init ── */
+renderApp();
+</script>
+</body>
+</html>
